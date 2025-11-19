@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Spinner } from "react-bootstrap";
 
-export const CreateActivityPopup = ({ show, handleClose, onActivityCreated }) => {
+export const CreateActivityPopup = ({ show, handleClose, onActivityCreated, coordinates }) => {
   const [formData, setFormData] = useState({
     name: "",
     sport: "",
+    description: "",
+    max_participants: "",
     date: "",
-    location: "",
+    
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -20,15 +22,31 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated }) =>
     setLoading(true);
     setError("");
 
+
+    if (!coordinates) {
+      setError("Debes seleccionar una ubicación en el mapa");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const token = localStorage.getItem("token");
-      const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/activities`, {
+      const token = localStorage.getItem("JWT-STORAGE-KEY");
+
+
+      const bodyWithCoords = {
+        ...formData,
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
+      };
+
+
+      const resp = await fetch(`${BASE_URL}api/activities`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(bodyWithCoords),
       });
 
       if (!resp.ok) {
@@ -49,12 +67,12 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated }) =>
   return (
     <Modal show={show} onHide={handleClose} centered backdrop="static" keyboard={false}>
       <Modal.Header closeButton className="bg-dark text-light">
-        <Modal.Title>Crear nueva actividad</Modal.Title>
+        <Modal.Title>Crear actividad deportiva</Modal.Title>
       </Modal.Header>
       <Modal.Body className="bg-dark text-light">
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label>Nombre de actividad</Form.Label>
+            <Form.Label>Título</Form.Label>
             <Form.Control
               type="text"
               name="name"
@@ -78,6 +96,26 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated }) =>
           </Form.Group>
 
           <Form.Group className="mb-3">
+            <Form.Label>Descripción</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="description"
+              onChange={handleChange}
+              placeholder="Describe la actividad"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Máx. participantes</Form.Label>
+            <Form.Control
+              name="max_participants"
+              type="number"
+              min="1"
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
             <Form.Label>Fecha y hora</Form.Label>
             <Form.Control
               type="datetime-local"
@@ -90,26 +128,14 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated }) =>
 
           <Form.Group className="mb-3">
             <Form.Label>Ubicación</Form.Label>
-            <Form.Control
-              type="text"
-              name="location"
-              placeholder="Ej: Parque del Retiro, Madrid"
-              value={formData.location}
-              onChange={handleChange}
-              required
-            />
+            <div className="p-2 bg-secondary rounded">
+              {coordinates
+                ? `Lat: ${coordinates.latitude.toFixed(5)}, Lng: ${coordinates.longitude.toFixed(5)}`
+                : "Haz clic en el mapa para marcar la ubicación"}
+            </div>
+
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Máximo de participantes</Form.Label>
-            <Form.Control
-              type="text"
-              name="location"
-              placeholder="Ej: Parque del Retiro, Madrid"
-              value={formData.location}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+          
 
           {error && <p className="text-danger">{error}</p>}
           <div className="d-flex justify-content-end">

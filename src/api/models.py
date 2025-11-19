@@ -33,8 +33,6 @@ class User(db.Model):
     biography = mapped_column(Text)
     sports = mapped_column(String(200))
     level = mapped_column(String(20))
-    latitude = mapped_column(Float)
-    longitude = mapped_column(Float)
     reports = mapped_column(Integer, default=0)
     is_blocked = mapped_column(db.Boolean, default=False)
     created_at = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
@@ -65,8 +63,6 @@ class User(db.Model):
             "biography": self.biography,
             "sports": self.sports,
             "level": self.level,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
             "created_at": self.created_at.isoformat(),
         }
 
@@ -79,14 +75,12 @@ class Activity(db.Model):
     title = mapped_column(String(100), nullable=False)
     sport = mapped_column(String(50), nullable=False)
     description = mapped_column(Text)
-    latitude = mapped_column(Float, nullable=False)
-    longitude = mapped_column(Float, nullable=False)
     date = mapped_column(Date, nullable=False)
-    time = mapped_column(Time, nullable=False)
     created_by = mapped_column(Integer, ForeignKey("user.id"))
     max_participants = mapped_column(Integer)
     created_at = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
-
+    latitude = mapped_column(Float, nullable=False)
+    longitude = mapped_column(Float, nullable=False)
     # Relaciones
     creator = relationship("User", back_populates="activities_created")
     participants = relationship("User", secondary=activity_user, back_populates="activities_joined")
@@ -98,15 +92,14 @@ class Activity(db.Model):
             "title": self.title,
             "sport": self.sport,
             "description": self.description,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
             "date": str(self.date),
-            "time": str(self.time),
             "created_by": self.created_by,
             "creator_name": self.creator.name if self.creator else None,
             "max_participants": self.max_participants,
             "created_at": self.created_at.isoformat(),
             "participants": [p.id for p in self.participants],
+            "latitude": self.latitude,
+            "longitude": self.longitude
         }
 
 

@@ -21,7 +21,7 @@ export const router = createBrowserRouter(
 
 createRoutesFromElements(
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>}>
-      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/about" element={<About />} />   
       <Route path="/single/:theId" element={<Single />} />
       <Route path="/demo" element={<Demo />} />
@@ -34,6 +34,7 @@ createRoutesFromElements(
       <Route path="/profile" element={<Profile />} />
       <Route path="*" element={<Login />} />
       <Route path="/user" element={<User />} />
+
     </Route>
   ),
     {
