@@ -29,16 +29,18 @@ export default function Home() {
 
       <section className="landing-cta">
         <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => window.location.href = "/register"}>
-          ¡Empieza ahora!
+          ¡Regístrate ahora!
         </motion.button>
-         
-         <Link to="/login">
-                            <motion.button className="btn btn-invite-user" onClick={() => setShowInviteModal(true)}>
-                                <i className="fas fa-user-plus me-2"></i>
-                                Login
-                            </motion.button>
-                        </Link>
       </section>
+      <section className="landing-cta">
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+          ¿Ya tienes cuenta?
+        </motion.p>
+        <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => window.location.href = "/login"}>
+          ¡Bienvenido de nuevo!
+        </motion.button>
+      </section>
+
     </div>
   );
 }
