@@ -26,7 +26,8 @@ from datetime import datetime, timedelta
 import re
 import os
 
-file_path = os.path.join(os.path.dirname(__file__), "newsletter", "newsletter.txt")
+file_path = os.path.join(os.path.dirname(
+    __file__), "newsletter", "newsletter.txt")
 
 
 # files for newsletter if not exist
@@ -147,6 +148,7 @@ def hello():
 
 # Endpoint: newsletter
 
+
 @app.route("/api/newsletter", methods=["POST"])
 def newsletter():
 
@@ -166,6 +168,27 @@ def newsletter():
     except Exception as e:
         return jsonify({"message": "Error al guardar el email", "error": str(e)}), 500
 
+    try:
+        msg = Message(
+            subject="¡Bienvenido a MeetFit!",
+            recipients=[email],
+            body="Gracias por suscribirte al newsletter. ¡Pronto recibirás novedades!",  # Treść tekstowa
+            html="""
+        <html>
+            <body>
+                <h1 style="color: #817DF9;">¡Bienvenido a MeetFit!</h1>
+                <p style="font-size: 18px;">Gracias por suscribirte al newsletter. ¡Pronto recibirás novedades!</p>
+                <p style="font-size: 16px; color: #666;">¡Mantente al tanto de las últimas actividades deportivas y mucho más!</p>
+            </body>
+        </html>
+    """
+        )
+
+        mail.send(msg)
+    except Exception as e:
+        print("Error enviando correo de bienvenida:", e)
+        return jsonify({"message": "Error al enviar el correo de bienvenida", "error": str(e)}), 500
+
     return jsonify({"message": f"¡Gracias! {email} ha sido añadido al newsletter."}), 200
 
 
@@ -181,6 +204,7 @@ def serve_any_other_file(path):
     return response
 
 # Endpoint: prueba envio correo -------------------------------
+
 
 @app.route("/test-email")
 def test_email():
@@ -242,6 +266,7 @@ def forgot_password():
 
 # Endpoint: restablecer contraseña------------------------------------
 
+
 @app.route("/api/reset/<token>", methods=["POST"])
 def reset_password(token):
     data = request.json
@@ -263,6 +288,7 @@ def reset_password(token):
 # FIN DE FORGOT PASSWORD Y RESET PASSWORD --------------------------------------
 
 # REPORTAR USUARIO
+
 
 @app.route('/api/report_user/<int:user_id>', methods=['POST'])
 @jwt_required()
@@ -443,7 +469,8 @@ def create_activity():
     user_id = int(get_jwt_identity())
     data = request.get_json()
 
-    required_fields = ["name", "sport", "description", "date","latitude", "longitude" ]
+    required_fields = ["name", "sport", "description",
+                       "date", "latitude", "longitude"]
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Faltan campos obligatorios"}), 400
 
@@ -452,9 +479,9 @@ def create_activity():
         sport=data["sport"],
         description=data.get("description"),
         max_participants=data.get("max_participants", 10),
-        date= datetime.strptime(data["date"], "%Y-%m-%dT%H:%M"),
-        latitude= float(data["latitude"]),
-        longitude= float(data["longitude"]),
+        date=datetime.strptime(data["date"], "%Y-%m-%dT%H:%M"),
+        latitude=float(data["latitude"]),
+        longitude=float(data["longitude"]),
         created_by=user_id,
     )
     db.session.add(activity)
@@ -476,7 +503,7 @@ def update_activity(id):
     data = request.get_json()
 
     VALID_SPORTS = ["Running", "Ciclismo", "Fútbol",
-        "Baloncesto", "Yoga", "Natación", "Crossfit"]
+                    "Baloncesto", "Yoga", "Natación", "Crossfit"]
 
     if data["sport"] not in VALID_SPORTS:
         return jsonify({"error": "Deporte inválido"}), 400
@@ -537,6 +564,7 @@ def get_users():
 
 # Obtener un usuario por ID (GET)
 
+
 @app.route('/api/user/<int:user_id>', methods=['GET'])
 @jwt_required()
 def get_user(user_id):
@@ -553,6 +581,7 @@ def get_user(user_id):
     return jsonify(user.serialize()), 200
 
 # Editar usuario (PUT)
+
 
 @app.route('/api/user/<int:user_id>', methods=['PUT'])
 @jwt_required()

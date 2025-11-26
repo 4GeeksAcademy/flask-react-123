@@ -36,7 +36,7 @@ export const Eventos = () => {
       console.log(events)
     } catch (err) {
       console.error(err);
-      setEvents([]); // fallback
+      setEvents(fallbackEvents); // fallback
     }
   };
 
