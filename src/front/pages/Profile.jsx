@@ -76,28 +76,28 @@ toast.success("🔐 Sesión cerrada correctamente");
   return (
     <div className="d-flex flex-column bg-dark text-light w-100 vh-100">
 
-      <div className="row flex-grow-1 g-0">
+    <div className="row flex-grow-1 g-0">
 
         {/* SIDEBAR */}
-        <div className="col-12 col-md-4 border-end bg-dark text-light p-3">
+        <div className="col-12 col-md-3 border-end bg-dark text-light p-3">
           <h5 className="text-center mb-4">Mi Cuenta</h5>
 
           <button
-            className={`mf-neon-btn--outline mb-3 ${profileTab === "profile" ? "active" : ""}`}
+            className={`mb-3 w-100 mf-neon-btn  ${profileTab === "profile" ? "active" : ""}`}
             onClick={() => setProfileTab("profile")}
           >
             Perfil
           </button>
 
           <button
-            className={`mf-neon-btn--outline mb-3 ${profileTab === "created" ? "active" : ""}`}
+            className={`mb-3 w-100 mf-neon-btn ${profileTab === "created" ? "active" : ""}`}
             onClick={() => setProfileTab("created")}
           >
             Mis Eventos Creados
           </button>
 
           <button
-            className={`mf-neon-btn--outline mb-3 ${profileTab === "joined" ? "active" : ""}`}
+            className={`mb-3 w-100 mf-neon-btn ${profileTab === "joined" ? "active" : ""}`}
             onClick={() => setProfileTab("joined")}
           >
             Eventos a los que Me Apunté
@@ -105,7 +105,7 @@ toast.success("🔐 Sesión cerrada correctamente");
         </div>
 
         {/* CONTENIDO */}
-        <div className="col-12 col-md-8 d-flex flex-column" style={{ height: "100vh", overflowY: "auto" }}>
+        <div className="col-12 col-md-9 d-flex flex-column" style={{ height: "100vh", overflowY: "auto" }}>
 
           <Container fluid className="d-flex flex-column bg-dark text-light py-5">
 

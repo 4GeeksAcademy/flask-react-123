@@ -21,7 +21,7 @@ export const Navbar = () => {
             ÚNETE
           </Link>
           <Link to="/login" className="btn custom-btn">
-            LOGEATE
+            INICIAR SESION
           </Link>
         </div>
       </div>

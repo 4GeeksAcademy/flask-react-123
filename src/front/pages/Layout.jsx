@@ -33,7 +33,7 @@ export const Layout = () => {
       <Footer />
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={4000}
         theme="dark"
         closeOnClick
         pauseOnHover

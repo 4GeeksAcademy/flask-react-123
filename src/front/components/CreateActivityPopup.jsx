@@ -31,8 +31,6 @@ export const CreateActivityPopup = ({ show, onActivityCreated, coordinates }) =>
   };
 
   const handleSubmit = async (e) => {
-    console.log("Request body:", bodyWithCoords);
-
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -51,6 +49,7 @@ export const CreateActivityPopup = ({ show, onActivityCreated, coordinates }) =>
         longitude: coordinates.longitude,
       };
 
+
       const resp = await fetch(`${BASE_URL}api/activities`, {
         method: "POST",
         headers: {
@@ -62,6 +61,7 @@ export const CreateActivityPopup = ({ show, onActivityCreated, coordinates }) =>
 
       if (!resp.ok) {
         const err = await resp.json();
+        console.error("SERVER ERROR 422 ==> ", err);
         toast.error(err.error || "🚫 Error creando actividad");
         setLoading(false);
         return; // 👈 EVITA QUE EL CÓDIGO SIGA EJECUTÁNDOSE
@@ -141,7 +141,7 @@ export const CreateActivityPopup = ({ show, onActivityCreated, coordinates }) =>
           />
         </Form.Group>
 
-        <div className="p-2 bg-secondary rounded text-light mb-2 mt-4 w-100 text-center">
+        <div className="p-2 bg-transparent rounded text-light mb-2 w-100 text-center">
           {coordinates
             ? `📍 Lat: ${coordinates.latitude.toFixed(5)}, Lng: ${coordinates.longitude.toFixed(5)}`
             : "Haz clic en el mapa para marcar la ubicación"}
@@ -149,7 +149,7 @@ export const CreateActivityPopup = ({ show, onActivityCreated, coordinates }) =>
 
         {error && <p className="text-danger w-100 text-center">{error}</p>}
 
-        <div className="newsletter-form mt-4 w-100 d-flex justify-content-center">
+        <div className="newsletter-form mt-3 w-100 d-flex justify-content-center">
           <button type="submit" disabled={loading || !coordinates} className="neon-create-btn">
             {loading ? <Spinner size="sm" /> : "Crear actividad"}
           </button>
