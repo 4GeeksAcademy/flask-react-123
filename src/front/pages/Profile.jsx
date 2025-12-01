@@ -9,6 +9,7 @@ import CreatedEvents from "../components/CreatedEvents";
 import { toast } from "react-toastify";
 
 
+
 export const Profile = () => {
   const [user_get, setUser_get] = useState(null);
   const [user_offlineMsg, setUser_offlineMsg] = useState("");
@@ -79,7 +80,7 @@ toast.success("🔐 Sesión cerrada correctamente");
     <div className="row flex-grow-1 g-0">
 
         {/* SIDEBAR */}
-        <div className="col-12 col-md-3 border-end bg-dark text-light p-3">
+        <div className="col-12 col-md-3 border-end bg-dark text-light p-3 mt-4">
           <h5 className="text-center mb-4">Mi Cuenta</h5>
 
           <button
@@ -231,7 +232,9 @@ toast.success("🔐 Sesión cerrada correctamente");
             )}
 
           </Container>
+          
         </div>
+        <br></br><br></br>
       </div>
     </div>
   );

@@ -306,20 +306,20 @@ export const MapView = () => {
       <div className="row g-0 text-center w-100 m-0">
 
         {showWelcomeTip && (
-          <div className="tip-bubble welcome-tip" style={{ top: "25px", left: "20px", zIndex: 9999 }}>
+          <div className="tip-bubble welcome-tip" style={{ top: "20px", left: "20px", zIndex: 9999 }}>
             ¡Hola! Aquí podrás crear tus eventos deportivos.
           </div>
         )}
 
         {showGeneralFormTip && (
-          <div className="tip-bubble form-tip" style={{ top: "100px", left: "60px", zIndex: 9999 }}>
+          <div className="tip-bubble form-tip" style={{ top: "100px", left: "40px", zIndex: 9999 }}>
             Haz clic en el mapa para establecer la ubicación del encuentro y luego completa el formulario.
           </div>
         )}
 
 
         {/* 📌 FORMULARIO */}
-        <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-0">
+        <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-0 mt-5">
           <div className="w-100 p-3" style={{ maxWidth: "700px", margin: "0 auto" }}>
             <CreateActivityPopup
               show={true}
@@ -331,10 +331,10 @@ export const MapView = () => {
 
 
         {/* 🗺️ MAPA */}
-        <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-3">
+        <div className="col-12 col-xl-6 d-flex justify-content-center align-items-center p-3 mt-5">
 
           {showMapTip && (
-            <div className="tip-bubble map-tip" style={{ top: "125px", right: "650px", zIndex: 9999 }}>
+            <div className="tip-bubble map-tip" style={{ top: "100px", right: "650px", zIndex: 9999 }}>
               Mueve el mapa. Desplázate libremente y encuentra el lugar ideal para tu evento.
             </div>
           )}
@@ -342,10 +342,10 @@ export const MapView = () => {
           <GoogleMap
             mapContainerStyle={{
               width: "100%",
-              height: "70vh",
-              minHeight: "350px",
-              marginTop: "135px",
-              marginRight: "60px",
+              height: "100%",
+              minHeight: "100%",
+               
+              marginRight: "70px",
               borderRadius: "20px",
               border: "2px solid #EE6C4D",
               borderTop: "6px solid #E3FE18",
@@ -421,7 +421,7 @@ export const MapView = () => {
         </div>
 
 
-        <hr style={{ border: "1px solid #817DF9", margin: "40px 0" }} />
+        <hr style={{ border: "1.5px solid #817DF9", margin: "40px 0" }} />
 
 
         <div
