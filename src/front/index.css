@@ -552,3 +552,31 @@ body {
     text-align: center;
   }
 }
+
+
+.mf-neon-btn-danger {
+  display: inline-block;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ff4d6d;
+  background: transparent;
+  border: 2px solid #ff4d6d;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  text-shadow: 0 0 5px #ff4d6d;
+  box-shadow: 0 0 6px #ff4d6d, inset 0 0 6px #ff4d6d;
+}
+
+.mf-neon-btn-danger:hover {
+  color: #ffffff;
+  background: #ff4d6d;
+  box-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d, inset 0 0 10px #ff3360;
+  transform: translateY(-2px);
+}
+
+.mf-neon-btn-danger:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 5px #ff4d6d, inset 0 0 5px #ff4d6d;
+}

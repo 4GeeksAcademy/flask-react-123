@@ -2,12 +2,42 @@ import React, { useState, useEffect } from 'react';
 import { user } from '../jsApiComponents/user';
 import { useNavigate } from 'react-router-dom';
 import EventInfo from './EventInfo';
+import { Button } from 'react-bootstrap';
 
 
 
 export default function CreatedEvents() {
   const [createdEvents, setCreatedEvents] = useState([]);
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+  const deleteEvent = async (eventId) => {
+    if (!window.confirm("¿Seguro que quieres eliminar este evento?")) return;
+
+    try {
+      const token = localStorage.getItem("JWT-STORAGE-KEY");
+
+      const response = await fetch(`${BASE_URL}api/activities/${eventId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (response.ok) {
+        setCreatedEvents(prev => prev.filter(ev => ev.id !== eventId));
+      } else if (response.status === 401) {
+        alert("Tu sesión ha caducado");
+        navigate("/login");
+      } else {
+        alert("No se pudo eliminar el evento.");
+      }
+
+    } catch (error) {
+      console.log("Error deleting event:", error);
+    }
+  };
+
 
   const getUser = async () => {
     try {
@@ -50,9 +80,28 @@ export default function CreatedEvents() {
             Ver en Google Maps <i className="fa-solid fa-location-dot"></i>
           </a>
 
-          <div className="mt-2">
-            <EventInfo event={event} />
-          </div>
+          <Button
+            size="small"
+            className="mf-neon-btn-small mf-neon-btn-purple mt-3 "
+            title="Ver detalles del evento o calificar"
+            onClick={() => navigate(`/events/${event.id}`)}
+            sx={{
+              minWidth: "70px",
+              minHeight: "40px",
+              fontSize: "1.2rem",
+            }}
+          >
+            Ver detalles 🔍
+          </Button>
+          
+          <button
+            className="mf-neon-btn-small w-100 mt-3"
+            onClick={() => deleteEvent(event.id)}
+            
+          >
+            Eliminar evento <i className="fa-solid fa-trash"></i>
+          </button>
+
         </div>
       ))}
     </div>

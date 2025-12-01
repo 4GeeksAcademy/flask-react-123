@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { user } from '../jsApiComponents/user';
 import { useNavigate } from 'react-router-dom';
 import EventInfo from './EventInfo';
+import { Button } from 'react-bootstrap';
 
 export default function JoinedEvents() {
   const [joinedEvents, setJoinedEvents] = useState([]);
@@ -50,7 +51,19 @@ export default function JoinedEvents() {
           </a>
 
           <div className="mt-2">
-            <EventInfo event={event} />
+            <Button
+              size="small"
+              className="mf-neon-btn-small mf-neon-btn-purple mt-3 w-100 "
+              title="Ver detalles del evento o calificar"
+              onClick={() => navigate(`/events/${event.id}`)}
+              sx={{
+                minWidth: "70px",
+                minHeight: "40px",
+                fontSize: "1.2rem",
+              }}
+            >
+              Ver detalles 🔍
+            </Button>
           </div>
         </div>
       ))}
