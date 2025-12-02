@@ -15,6 +15,11 @@ export const CreateActivityPopup = ({ show, onActivityCreated, coordinates }) =>
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+  const getCurrentDateTimeLocal = () => {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); 
+  return now.toISOString().slice(0,16); 
+};
 
 
 
@@ -139,6 +144,7 @@ export const CreateActivityPopup = ({ show, onActivityCreated, coordinates }) =>
         <Form.Group className="mb-2 newsletter-form w-100">
           <Form.Control
             type="datetime-local"
+            min={getCurrentDateTimeLocal()}
             name="date"
             value={formData.date}
             onChange={handleChange}
