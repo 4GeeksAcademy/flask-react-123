@@ -1,0 +1,27 @@
+export const sports = [
+  "Artes Marciales",
+  "Baloncesto",
+  "Boxeo",
+  "Caminata",
+  "Ciclismo",
+  "Escalada",
+  "Esgrima",
+  "Funcional",
+  "Fútbol",
+  "Golf",
+  "Kayak",
+  "Meditación",
+  "Natación",
+  "Paddle",
+  "Patinete",
+  "Pilates",
+  "Ping Pong",
+  "Running",
+  "Skateboard",
+  "Spinning",
+  "Surf",
+  "Tenis",
+  "Voleibol",
+  "Yoga"
+];
+
